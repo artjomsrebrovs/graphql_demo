@@ -1,0 +1,72 @@
+scalar Date
+scalar Long
+
+type Department {
+    id: Long!
+    name: String!
+    description: String
+    employees: [Employee]
+}
+
+type Position {
+    id: Long!
+    name: String!
+    description: String
+    baseSalary: Float
+}
+
+type Employee {
+    id: Long!
+    name: String!
+    surname: String!
+    department: Department
+    employmentDate: Date!
+    active: Boolean
+    position: Position
+}
+
+type Query {
+    getAllEmployees: [Employee]!
+    getEmployeeById (id : Long): Employee!
+    getEmployeeFullNameById (id : Long): EmployeeResponse!
+    getEmployeeByNameAndSurname (employeeFullNameRequest: EmployeeFullNameRequest): Employee
+    getAllDepartments: [Department]!
+    getEmployeesByDepartmentName (departmentNameRequest : DepartmentNameRequest) : [Employee]
+}
+
+type EmployeeResponse {
+    id: Long!
+    name: String!
+    surname: String!
+    fullName: String!
+}
+
+input EmployeeFullNameRequest {
+    name: String!
+    surname: String!
+}
+
+input DepartmentNameRequest {
+    departmentName: String!
+}
+
+type Mutation {
+    createEmployee (employeeRequest: EmployeeRequest) : EmployeeResponse!
+}
+
+input EmployeeRequest {
+    name: String!
+    surname: String!
+    departmentRequest: DepartmentRequest
+    employmentDate: Date!
+    active: Boolean
+    positionRequest: PositionRequest
+}
+
+input DepartmentRequest {
+    id: Long!
+}
+
+input PositionRequest {
+    id: Long!
+}
